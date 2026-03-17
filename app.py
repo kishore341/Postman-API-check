@@ -82,6 +82,34 @@ def get_customer(customer_id: int):
         "Score": row.Score
     }
 
+##new
+@app.get("/customers/{customer_id}")
+def get_customer(customer_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    query = """
+    SELECT CustomerID, FirstName, LastName, Country, Score
+    FROM Sales.PracticeCustomers
+    WHERE CustomerID = ?
+    """
+    cursor.execute(query, customer_id)
+
+    row = cursor.fetchone()
+    conn.close()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Customer not found")
+
+    return {
+        "CustomerID": row.CustomerID,
+        "FirstName": row.FirstName,
+        "LastName": row.LastName,
+        "Country": row.Country,
+        "Score": row.Score
+    }
+
+
 
 # ==============================
 # CREATE NEW CUSTOMER
