@@ -82,7 +82,7 @@ def get_customer(customer_id: int):
         "Score": row.Score
     }
 
-##new
+##new 2
 @app.get("/customers/{customer_id}")
 def get_customer(customer_id: int):
     conn = get_db_connection()
